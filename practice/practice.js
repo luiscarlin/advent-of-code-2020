@@ -1,29 +1,21 @@
 import fs from 'fs';
 import _ from 'lodash';
 
-const calculateFuel = (num) => {
+const calculateFuelRecursive = (num) => {
   const nextNum = Math.floor(num / 3) - 2;
 
   if (nextNum < 0) {
     return 0;
   }
-  return calculateFuel(nextNum) + nextNum;
+  return calculateFuelRecursive(nextNum) + nextNum;
 };
 
-const lines = fs
+const nums = fs
   .readFileSync(`./practice/practice.in`, 'utf8')
   .split('\n')
-  .map(Number)
-  .map((num) => Math.floor(num / 3) - 2);
+  .map(Number);
 
-console.log('part 1', _.sum(lines));
+console.log('part 1', _.sum(nums.map((num) => Math.floor(num / 3) - 2)));
+console.log('part 2', _.sum(nums.map(calculateFuelRecursive)));
 
-const lines2 = fs
-  .readFileSync(`./practice/practice.in`, 'utf8')
-  .split('\n')
-  .map(Number)
-  .map(calculateFuel);
-
-console.log('part 2', _.sum(lines2));
-
-export { calculateFuel };
+export { calculateFuelRecursive };
