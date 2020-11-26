@@ -6,8 +6,16 @@
   "author": "Luis Carlin <luiscarlin@gmail.com>",
   "license": "MIT",
   "type": "module",
+  "jest": {
+    "transform": {}
+  },
+  "scripts": {
+    "test": "node --experimental-vm-modules node_modules/.bin/jest",
+    "test:watch": "yarn test -- --watch"
+  },
   "dependencies": {
     "fs": "^0.0.1-security",
+    "jest": "^26.6.3",
     "lodash": "^4.17.20"
   }
 }
