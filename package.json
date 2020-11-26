@@ -7,7 +7,6 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
-    "@types/node": "^14.14.10",
     "fs": "^0.0.1-security",
     "lodash": "^4.17.20"
   }
