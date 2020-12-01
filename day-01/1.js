@@ -10,12 +10,14 @@ const part1 = () => {
     nums[i];
 
     for (let j = 0; j < nums.length; j += 1) {
-      if (nums[i] !== nums[j]) {
-        if (nums[i] + nums[j] === 2020) {
-          num1 = nums[i];
-          num2 = nums[j];
-          break;
-        }
+      if (i === j) {
+        continue;
+      }
+
+      if (nums[i] + nums[j] === 2020) {
+        num1 = nums[i];
+        num2 = nums[j];
+        break;
       }
     }
   }
@@ -33,6 +35,10 @@ const part2 = () => {
   for (let i = 0; i < nums.length; i += 1) {
     for (let j = 0; j < nums.length; j += 1) {
       for (let z = 0; z < nums.length; z += 1) {
+        if (i === j || i === z || j === z) {
+          continue;
+        }
+
         if (nums[i] + nums[j] + nums[z] === 2020) {
           num1 = nums[i];
           num2 = nums[j];
