@@ -36,10 +36,7 @@ const part2 = () => {
     const firstChar = pass[min - 1];
     const secondChar = pass[max - 1];
 
-    if (
-      (firstChar === letter && secondChar !== letter) ||
-      (firstChar !== letter && secondChar === letter)
-    ) {
+    if ((firstChar === letter) ^ (secondChar === letter)) {
       validPasswords += 1;
     }
   });
