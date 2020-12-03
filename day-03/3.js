@@ -1,7 +1,5 @@
 import fs from 'fs';
 
-// 31 cols
-// index 0 => 30
 //[row][col]
 
 const grid = fs
@@ -17,9 +15,9 @@ const findTreesSeen = (right, down) => {
 
   while (true) {
     row = row + down;
-    col = (col + right) % 31;
+    col = (col + right) % grid[0].length;
 
-    if (row >= 323) {
+    if (row >= grid.length) {
       break;
     }
 
