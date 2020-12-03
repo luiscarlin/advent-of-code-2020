@@ -33,11 +33,16 @@ const findTreesSeen = (right, down) => {
 
 console.log('part 1', findTreesSeen(3, 1));
 
-console.log(
-  'part 2',
-  findTreesSeen(1, 1) *
-    findTreesSeen(3, 1) *
-    findTreesSeen(5, 1) *
-    findTreesSeen(7, 1) *
-    findTreesSeen(1, 2)
-);
+const slopes = [
+  [1, 1],
+  [3, 1],
+  [5, 1],
+  [7, 1],
+  [1, 2],
+];
+
+const product = slopes
+  .map((slope) => findTreesSeen(...slope))
+  .reduce((acc, current) => acc * current, 1);
+
+console.log('part 2', product);
