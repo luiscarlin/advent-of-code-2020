@@ -2,17 +2,17 @@ import fs from 'fs';
 import _ from 'lodash';
 
 const part1 = () => {
-  const allYesQuestionsInGroup = fs
+  const allYesAnswers = fs
     .readFileSync('./day-06/6.in', 'utf8')
     .split('\n\n')
     .map((t) => t.replace(/\n/g, ''))
     .map((a) => new Set(a.split('')).size);
 
-  return _.sum(allYesQuestionsInGroup);
+  return _.sum(allYesAnswers);
 };
 
 const part2 = () => {
-  const lines = fs
+  const commonYesAnswers = fs
     .readFileSync('./day-06/6.in', 'utf8')
     .split('\n\n')
     .map((a) => a.split('\n'))
@@ -25,7 +25,7 @@ const part2 = () => {
           ).length
     );
 
-  return _.sum(lines);
+  return _.sum(commonYesAnswers);
 };
 
 console.log('part 1', part1());
