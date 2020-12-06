@@ -1,7 +1,39 @@
 import fs from 'fs';
 import nx from 'jsnetworkx';
 
-const generateGrid = () => {
+const getValue = (maze, row, col) =>
+  maze.find((a) => a.row === row && a.col === col).value;
+
+const getConvertedValue = (maze, row, col, start, exit) => {
+  const value = getValue(maze, row, col);
+
+  if (row === start.row && col === start.col) {
+    return 'S';
+  }
+  if (row === exit.row && col === exit.col) {
+    return 'E';
+  }
+  if (value === '1') {
+    return '#';
+  }
+  if (value === '0') {
+    return '.';
+  }
+};
+
+const printMaze = (maze, rows, cols, start, exit) => {
+  console.log();
+  for (let row = 0; row < rows; row += 1) {
+    for (let col = 0; col < cols; col += 1) {
+      process.stdout.write(getConvertedValue(maze, row, col, start, exit));
+    }
+    console.log();
+  }
+
+  console.log();
+};
+
+const populateGrid = () => {
   const lines = fs.readFileSync('./practice/maze/maze.in', 'utf8').split('\n');
 
   const [cols, rows] = lines[0].split(' ').map(Number);
@@ -62,7 +94,9 @@ const getNeighbors = (location, maze) => {
   return neighbors;
 };
 
-const { maze, start, exit } = generateGrid();
+const { maze, start, exit, rows, cols } = populateGrid();
+
+printMaze(maze, rows, cols, start, exit);
 
 const graph = new nx.Graph();
 
