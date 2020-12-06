@@ -11,7 +11,7 @@ const calculateFuelRecursive = (num) => {
 };
 
 const nums = fs
-  .readFileSync(`./practice/practice.in`, 'utf8')
+  .readFileSync(`./practice/sample/sample.in`, 'utf8')
   .split('\n')
   .map(Number);
 

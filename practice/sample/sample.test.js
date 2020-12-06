@@ -1,4 +1,4 @@
-import { calculateFuelRecursive } from './practice';
+import { calculateFuelRecursive } from './sample';
 
 describe('practice', () => {
   describe('calculateFuelRecursive', () => {
