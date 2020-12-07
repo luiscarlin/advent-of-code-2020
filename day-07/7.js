@@ -86,7 +86,7 @@ const part2 = () => {
     }
   });
 
-  function recurse(key) {
+  const recurse = (key) => {
     const children = dep[key];
 
     if (!children || Object.keys(children)[0]?.includes('other bag')) {
@@ -103,7 +103,7 @@ const part2 = () => {
     }
 
     return acc;
-  }
+  };
 
   return recurse('shiny gold bag');
 };
