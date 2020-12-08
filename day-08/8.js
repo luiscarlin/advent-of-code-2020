@@ -22,11 +22,11 @@ const part1 = () => {
     const [op, arg] = instr[pointer];
 
     if (op === 'acc') {
-      acc += Number(arg);
+      acc += +arg;
 
       pointer += 1;
     } else if (op === 'jmp') {
-      pointer += Number(arg);
+      pointer += +arg;
     } else {
       pointer += 1;
     }
@@ -61,11 +61,11 @@ const part2 = () => {
       const [op, arg] = instr[pointer];
 
       if (op === 'acc') {
-        acc += Number(arg);
+        acc += +arg;
 
         pointer += 1;
       } else if (op === 'jmp') {
-        pointer += Number(arg);
+        pointer += +arg;
       } else {
         pointer += 1;
       }
