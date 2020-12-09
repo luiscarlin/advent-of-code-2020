@@ -39,7 +39,7 @@ const part1 = () => {
 };
 
 const part2 = () => {
-  const match = 507622668;
+  const match = part1();
 
   const list = fs.readFileSync('./day-09/9.in', 'utf8').split('\n').map(Number);
 
@@ -63,7 +63,7 @@ const part2 = () => {
     }
   }
 
-  return Math.min(...nums) + Math.max(...nums);
+  return _.min(nums) + _.max(nums);
 };
 
 console.log('part 1', part1());
