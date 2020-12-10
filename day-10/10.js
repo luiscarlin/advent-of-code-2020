@@ -1,57 +1,34 @@
 import fs from 'fs';
-import _ from 'lodash';
+
+const adapters = fs
+  .readFileSync('./day-10/10.in', 'utf8')
+  .split('\n')
+  .map(Number)
+  .sort((a, b) => a - b);
+
+adapters.unshift(0);
+adapters.push(adapters[adapters.length - 1] + 3);
 
 const part1 = () => {
-  const adapters = fs
-    .readFileSync('./day-10/10.in', 'utf8')
-    .split('\n')
-    .map(Number);
+  let numOnes = 0;
+  let numThrees = 0;
 
-  const max = _.max(adapters);
-  const deviceJolts = max + 3;
+  for (let i = 0; i < adapters.length - 1; i += 1) {
+    const diff = adapters[i + 1] - adapters[i];
 
-  const diff = {};
-
-  let current = _.min(adapters);
-
-  diff[current] = 1;
-
-  while (true) {
-    let nextItem = _.min(
-      adapters.filter((a) =>
-        [current + 1, current + 2, current + 3].includes(a)
-      )
-    );
-
-    let difference = nextItem - current;
-
-    if ([difference] in diff) {
-      diff[difference] += 1;
-    } else {
-      diff[difference] = 1;
+    if (diff === 1) {
+      numOnes += 1;
     }
 
-    if (nextItem + 3 === deviceJolts) {
-      diff[3] += 1;
-      break;
+    if (diff === 3) {
+      numThrees += 1;
     }
-
-    current = nextItem;
   }
 
-  return diff['1'] * diff['3'];
+  return numOnes * numThrees;
 };
 
 const part2 = () => {
-  const adapters = fs
-    .readFileSync('./day-10/10.in', 'utf8')
-    .split('\n')
-    .map(Number);
-
-  adapters.push(0);
-  adapters.push(_.max(adapters) + 3);
-  adapters.sort((a, b) => a - b);
-
   const cacheNumOfBranchesFromNodeIndex = {};
 
   const findNumberOfBranchesFromNode = (nodeIndex) => {
