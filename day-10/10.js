@@ -42,16 +42,6 @@ const part1 = () => {
   return diff['1'] * diff['3'];
 };
 
-//
-// (0), 1, 4, 5, 6, 7, 10, 11, 12, 15, 16, 19, (22)
-// (0), 1, 4, 5, 6, 7, 10, 12, 15, 16, 19, (22)
-// (0), 1, 4, 5, 7, 10, 11, 12, 15, 16, 19, (22)
-// (0), 1, 4, 5, 7, 10, 12, 15, 16, 19, (22)
-// (0), 1, 4, 6, 7, 10, 11, 12, 15, 16, 19, (22)
-// (0), 1, 4, 6, 7, 10, 12, 15, 16, 19, (22)
-// (0), 1, 4, 7, 10, 11, 12, 15, 16, 19, (22)
-// (0), 1, 4, 7, 10, 12, 15, 16, 19, (22)
-
 const part2 = () => {
   const adapters = fs
     .readFileSync('./day-10/10.in', 'utf8')
@@ -62,27 +52,34 @@ const part2 = () => {
   adapters.push(_.max(adapters) + 3);
   adapters.sort((a, b) => a - b);
 
-  const totalValidRoutesUpToAdapter = new Array(adapters.length).fill(0);
+  const cacheNumOfBranchesFromNodeIndex = {};
 
-  totalValidRoutesUpToAdapter[0] = 1;
+  const findNumberOfBranchesFromNode = (nodeIndex) => {
+    if (nodeIndex === adapters.length - 1) {
+      // only one branch from prev took you to the end
+      return 1;
+    }
 
-  for (let i = 0; i < adapters.length; i += 1) {
-    for (let x = 0; x < adapters.length; x += 1) {
-      if (i === x) {
-        continue;
-      }
+    if (nodeIndex in cacheNumOfBranchesFromNodeIndex) {
+      // return cached value to prevent calculating this again
+      return cacheNumOfBranchesFromNodeIndex[nodeIndex];
+    }
 
-      if (adapters[x] - adapters[i] <= 3) {
-        // this adapter is valid, so save accumulated number of valid routes up to here
-        totalValidRoutesUpToAdapter[x] += totalValidRoutesUpToAdapter[i];
-      } else {
-        break;
+    // perform depth first traversal
+    let numberOfChildBranches = 0;
+
+    for (let i = nodeIndex + 1; i < adapters.length; i += 1) {
+      if (adapters[i] - adapters[nodeIndex] <= 3) {
+        numberOfChildBranches += findNumberOfBranchesFromNode(i);
       }
     }
-  }
 
-  // the last entry has the total accumulated number of valid routes
-  return totalValidRoutesUpToAdapter[adapters.length - 1];
+    // we know total number of branches under this node, so cache it
+    cacheNumOfBranchesFromNodeIndex[nodeIndex] = numberOfChildBranches;
+    return numberOfChildBranches;
+  };
+
+  return findNumberOfBranchesFromNode(0);
 };
 
 console.log('part 1', part1());
