@@ -29,22 +29,23 @@ const part1 = () => {
 };
 
 const part2 = () => {
-  const cacheNumOfBranchesFromNodeIndex = {};
+  const cache = {};
 
   const findNumberOfBranchesFromNode = (nodeIndex) => {
+    // there is only one branch that leads to the end
     if (nodeIndex === adapters.length - 1) {
-      // only one branch from prev took you to the end
       return 1;
     }
 
-    if (nodeIndex in cacheNumOfBranchesFromNodeIndex) {
-      // return cached value to prevent calculating this again
-      return cacheNumOfBranchesFromNodeIndex[nodeIndex];
+    // return cached value to prevent calculating this again
+    if (nodeIndex in cache) {
+      return cache[nodeIndex];
     }
 
     // perform depth first traversal
     let numberOfChildBranches = 0;
 
+    // calculate the number of branches in this subtree
     for (let i = nodeIndex + 1; i < adapters.length; i += 1) {
       if (adapters[i] - adapters[nodeIndex] <= 3) {
         numberOfChildBranches += findNumberOfBranchesFromNode(i);
@@ -52,7 +53,7 @@ const part2 = () => {
     }
 
     // we know total number of branches under this node, so cache it
-    cacheNumOfBranchesFromNodeIndex[nodeIndex] = numberOfChildBranches;
+    cache[nodeIndex] = numberOfChildBranches;
     return numberOfChildBranches;
   };
 
