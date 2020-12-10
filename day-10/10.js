@@ -62,9 +62,9 @@ const part2 = () => {
   adapters.push(_.max(adapters) + 3);
   adapters.sort((a, b) => a - b);
 
-  const validRouteForAdapter = new Array(adapters.length).fill(0);
+  const totalValidRoutesUpToAdapter = new Array(adapters.length).fill(0);
 
-  validRouteForAdapter[0] = 1;
+  totalValidRoutesUpToAdapter[0] = 1;
 
   for (let i = 0; i < adapters.length; i += 1) {
     for (let x = 0; x < adapters.length; x += 1) {
@@ -73,7 +73,8 @@ const part2 = () => {
       }
 
       if (adapters[x] - adapters[i] <= 3) {
-        validRouteForAdapter[x] += validRouteForAdapter[i];
+        // this adapter is valid, so save accumulated number of valid routes up to here
+        totalValidRoutesUpToAdapter[x] += totalValidRoutesUpToAdapter[i];
       } else {
         break;
       }
@@ -81,7 +82,7 @@ const part2 = () => {
   }
 
   // the last entry has the total accumulated number of valid routes
-  return validRouteForAdapter[adapters.length - 1];
+  return totalValidRoutesUpToAdapter[adapters.length - 1];
 };
 
 console.log('part 1', part1());
