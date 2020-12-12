@@ -6,77 +6,43 @@ const part1 = () => {
 
   let x = 0;
   let y = 0;
-  let dir = 'E';
 
-  const coord = ['N', 'E', 'S', 'W'];
+  // E
+  let dir = 1;
 
-  for (let i of lines) {
-    const direction = i[0];
-    const amount = +i.slice(1);
+  // N=0, E=1, S=2, W=3
+  const unitVectorX = [0, 1, 0, -1];
+  const unitVectorY = [1, 0, -1, 0];
 
-    if (direction === 'N') {
+  for (let line of lines) {
+    const instr = line[0];
+    const amount = +line.slice(1);
+
+    if (instr === 'N') {
       y += amount;
-    }
-
-    if (direction === 'S') {
+    } else if (instr === 'S') {
       y -= amount;
-    }
-
-    if (direction === 'W') {
+    } else if (instr === 'W') {
       x -= amount;
-    }
-
-    if (direction === 'E') {
+    } else if (instr === 'E') {
       x += amount;
-    }
-
-    if (direction === 'F') {
-      if (dir === 'N') {
-        y += amount;
+    } else if (instr === 'F') {
+      x += unitVectorX[dir] * amount;
+      y += unitVectorY[dir] * amount;
+    } else if (instr === 'L') {
+      for (let i of _.range(amount / 90)) {
+        dir = (dir + 3) % 4;
       }
-      if (dir === 'S') {
-        y -= amount;
+    } else if (instr === 'R') {
+      for (let i of _.range(amount / 90)) {
+        dir = (dir + 1) % 4;
       }
-      if (dir === 'W') {
-        x -= amount;
-      }
-      if (dir === 'E') {
-        x += amount;
-      }
-    }
-
-    if (direction === 'L') {
-      const turns = (amount / 90) % 4;
-
-      let index = coord.indexOf(dir);
-
-      for (let i of _.range(turns)) {
-        index -= 1;
-
-        if (index === -1) {
-          index = 3;
-        }
-      }
-
-      dir = coord[index];
-    }
-
-    if (direction === 'R') {
-      const turns = (amount / 90) % 4;
-
-      let index = coord.indexOf(dir);
-
-      for (let i of _.range(turns)) {
-        index += 1;
-
-        if (index === 4) {
-          index = 0;
-        }
-      }
-
-      dir = coord[index];
+    } else {
+      console.error('how did you get here!?');
+      break;
     }
   }
+
   return Math.abs(x) + Math.abs(y);
 };
 
@@ -88,38 +54,26 @@ const part2 = () => {
   let x = 0;
   let y = 0;
 
-  for (let i of lines) {
-    const direction = i[0];
-    const amount = +i.slice(1);
+  for (let line of lines) {
+    const instr = line[0];
+    const amount = +line.slice(1);
 
-    if (direction === 'N') {
+    if (instr === 'N') {
       wy += amount;
-    }
-
-    if (direction === 'S') {
+    } else if (instr === 'S') {
       wy -= amount;
-    }
-
-    if (direction === 'E') {
+    } else if (instr === 'E') {
       wx += amount;
-    }
-
-    if (direction === 'W') {
+    } else if (instr === 'W') {
       wx -= amount;
-    }
-
-    if (direction === 'F') {
+    } else if (instr === 'F') {
       x += amount * wx;
       y += amount * wy;
-    }
-
-    if (direction === 'L') {
+    } else if (instr === 'L') {
       for (let i of _.range(amount / 90)) {
         [wx, wy] = [-wy, wx];
       }
-    }
-
-    if (direction === 'R') {
+    } else if (instr === 'R') {
       for (let i of _.range(amount / 90)) {
         [wx, wy] = [wy, -wx];
       }
