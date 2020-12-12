@@ -117,18 +117,14 @@ const part2 = () => {
       const turns = amount / 90;
 
       for (let i of _.range(turns)) {
-        let orgWx = wx;
-        wx = -wy;
-        wy = orgWx;
+        [wx, wy] = [-wy, wx];
       }
     }
 
     if (direction === 'R') {
       const turns = amount / 90;
       for (let i of _.range(turns)) {
-        let orgWx = wx;
-        wx = wy;
-        wy = -orgWx;
+        [wx, wy] = [wy, -wx];
       }
     }
   }
