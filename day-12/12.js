@@ -114,16 +114,13 @@ const part2 = () => {
     }
 
     if (direction === 'L') {
-      const turns = amount / 90;
-
-      for (let i of _.range(turns)) {
+      for (let i of _.range(amount / 90)) {
         [wx, wy] = [-wy, wx];
       }
     }
 
     if (direction === 'R') {
-      const turns = amount / 90;
-      for (let i of _.range(turns)) {
+      for (let i of _.range(amount / 90)) {
         [wx, wy] = [wy, -wx];
       }
     }
