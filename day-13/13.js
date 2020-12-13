@@ -44,12 +44,16 @@ const part2 = () => {
     .split('\n')
     .map((n) => n.trim());
 
-  const buses = lines[1].split(',');
+  const buses = lines[1].split(',').map((bus) => {
+    if (bus !== 'x') {
+      return +bus;
+    }
+    return bus;
+  });
 
   let timestamp = 0;
 
   while (true) {
-    console.log(timestamp);
     let found = true;
 
     for (let i = 0; i < buses.length; i++) {
@@ -57,15 +61,14 @@ const part2 = () => {
         continue;
       }
 
-      if ((timestamp + i) % +buses[i] !== 0) {
+      if ((timestamp + i) % buses[i] !== 0) {
         found = false;
         break;
       }
     }
 
     if (found) {
-      console.log('answer', timestamp);
-      break;
+      return timestamp;
     }
 
     timestamp++;
