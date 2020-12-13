@@ -38,4 +38,41 @@ const part1 = () => {
   return leastDiff * selectedBus;
 };
 
-console.log('part 1', part1());
+const part2 = () => {
+  const lines = fs
+    .readFileSync('./day-13/13.in', 'utf8')
+    .split('\n')
+    .map((n) => n.trim());
+
+  const buses = lines[1].split(',');
+
+  let timestamp = 0;
+
+  while (true) {
+    console.log(timestamp);
+    let found = true;
+
+    for (let i = 0; i < buses.length; i++) {
+      if (buses[i] === 'x') {
+        continue;
+      }
+
+      if ((timestamp + i) % +buses[i] !== 0) {
+        found = false;
+        break;
+      }
+    }
+
+    if (found) {
+      console.log('answer', timestamp);
+      break;
+    }
+
+    timestamp++;
+  }
+
+  // console.log(buses);
+};
+
+// console.log('part 1', part1());
+console.log('part 2', part2());
