@@ -44,38 +44,25 @@ const part2 = () => {
     .split('\n')
     .map((n) => n.trim());
 
-  const buses = lines[1].split(',').map((bus) => {
-    if (bus !== 'x') {
-      return +bus;
-    }
-    return bus;
-  });
+  const buses = lines[1].split(',').map(Number);
+  const contraints = [];
 
-  let timestamp = 0;
-
-  while (true) {
-    let found = true;
-
-    for (let i = 0; i < buses.length; i++) {
-      if (buses[i] === 'x') {
-        continue;
-      }
-
-      if ((timestamp + i) % buses[i] !== 0) {
-        found = false;
-        break;
-      }
+  for (let i = 0; i < buses.length; i++) {
+    if (isNaN(buses[i])) {
+      continue;
     }
 
-    if (found) {
-      return timestamp;
-    }
+    const mod = buses[i];
+    const remainder = (mod - (i % mod)) % mod;
 
-    timestamp++;
+    contraints.push({ remainder, mod });
   }
 
-  // console.log(buses);
+  return contraints;
 };
 
-// console.log('part 1', part1());
-console.log('part 2', part2());
+console.log('part 1', part1());
+console.log(
+  'part 2. - Go to https://www.dcode.fr/chinese-remainder and enter these numbers to get the answer:\n',
+  part2()
+);
